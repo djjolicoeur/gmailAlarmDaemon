@@ -18,7 +18,7 @@
 #           (use "" for wildcard
 #DELAY = seconds before updates ( passed to start() )
 #EXAMPLE:
-#         alarm on any email from sender=djjolicoeur@gmail.com
+#         alarm on any email from sender=anotherEmail@anywhere.com
 #
 #         alarm = GmailAlarmDaemon.new(
 #                   "youremail@gmail.com",

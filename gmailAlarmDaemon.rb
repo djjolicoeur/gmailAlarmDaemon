@@ -64,16 +64,16 @@ class GmailAlarmDaemon
   end
 
   def testEmail()
-    if @valid.length > 0
-      fetch = @server.fetch(@valid,'BODY[TEXT]')
-      fetch.each do |pull|
-        data = pull.attr['BODY[TEXT]']
-        if data.include?(@bodytext)
-          yield data
-        end
-      end
-    end
-  end
+		if @valid.length > 0
+    	fetch = @server.fetch(@valid,'BODY[TEXT]')
+    	fetch.each do |pull|
+      	data = pull.attr['BODY[TEXT]']
+      	if data.include?(@bodytext)
+        	yield data
+      	end
+    	end
+  	end
+	end
       
   def start(delay)
     @server.login(@username,@password)
@@ -82,8 +82,10 @@ class GmailAlarmDaemon
     if resp.kind_of?(Net::IMAP::UntaggedResponse) and resp.name == "EXISTS"
       @new = true
     end }
+		
 
     i = 0
+		begin
     while 1
       @server.check 
       if @new
@@ -101,6 +103,12 @@ class GmailAlarmDaemon
       sleep delay
     end
   end
+	rescue Net::IMAP::ByeResponseError => e
+		puts e.message
+		puts "restarting"
+		sleep 20
+		start(delay)
+	end
 end
 
 

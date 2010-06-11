@@ -64,16 +64,16 @@ class GmailAlarmDaemon
   end
 
   def testEmail()
-		if @valid.length > 0
-    	fetch = @server.fetch(@valid,'BODY[TEXT]')
-    	fetch.each do |pull|
-      	data = pull.attr['BODY[TEXT]']
-      	if data.include?(@bodytext)
-        	yield data
-      	end
-    	end
-  	end
-	end
+    if @valid.length > 0
+      fetch = @server.fetch(@valid,'BODY[TEXT]')
+      fetch.each do |pull|
+        data = pull.attr['BODY[TEXT]']
+        if data.include?(@bodytext)
+          yield data
+        end
+      end
+    end
+  end
       
   def start(delay)
     @server.login(@username,@password)
